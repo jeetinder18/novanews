@@ -10,6 +10,8 @@ function App() {
 
   const fetchNews = async (query = "") => {
     try {
+      setSummaries({}); //clear old summaries
+
       let url = "";
 
       if (query) {
@@ -41,7 +43,7 @@ function App() {
 
       setSummaries((prev) => ({
         ...prev,
-        [index]: res.data.summary
+        [article.url]: res.data.summary
       }))
 
     } catch (err) {
@@ -74,9 +76,9 @@ function App() {
         Search
       </button>
 
-      {news.map((article, index) => {
+      {news.map((article) => {
           return (
-            <div key={index}>
+            <div key={article.url}>
 
               {/* Comment: showing the image */}
 
@@ -96,12 +98,12 @@ function App() {
 
               {/* Comment: AI Summary button and showing the summary */}
 
-              <button onClick={() => getSummary(article, index)}>
+              <button onClick={() => getSummary(article)}>
                 Get AI Summary
               </button>
 
-              {summaries[index] && (
-                <p>AI Summary: {summaries[index]}</p>
+              {summaries[article.url] && (
+                <p>AI Summary: {summaries[article.url]}</p>
               )}
 
             </div>
