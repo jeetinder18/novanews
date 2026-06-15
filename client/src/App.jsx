@@ -3,6 +3,8 @@ import './App.css'
 
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function App() {
   const [ news, setNews ] = useState([]);
   const [ searchTerm, setSearchTerm ] = useState("");
@@ -15,9 +17,9 @@ function App() {
       let url = "";
 
       if (query) {
-        url = `http://localhost:5000/news?q=${query}`;
+        url = `${API_BASE_URL}/news?q=${query}`;
       } else {
-        url = "http://localhost:5000/news";
+        url = `${API_BASE_URL}/news`;
       }
 
       const response = await axios.get(url);
@@ -34,7 +36,7 @@ function App() {
 
   const getSummary = async (article, index) => {
     try {
-      const res = await axios.post("http://localhost:5000/summarise", {
+      const res = await axios.post(`${API_BASE_URL}/summarise`, {
 
         title: article.title,
         description: article.description
